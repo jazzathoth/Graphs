@@ -7,6 +7,7 @@ class Graph:
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
     def __init__(self):
         self.vertices = {}
+
     def add_vertex(self, vertex):
         """
         Add a vertex to the graph.
@@ -14,6 +15,7 @@ class Graph:
         if vertex not in self.vertices:
             self.vertices[vertex] = set()
         return
+
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
@@ -21,6 +23,17 @@ class Graph:
         if (v1 in self.vertices) and (v2 in self.vertices):
             self.vertices[v1].add(v2)
             #self.vertices[v2].add(v1)
+        return
+
+    def add_bd_edge(self, v1, v2):
+        """
+        Add a bidirectional edge to graph
+        :param v1: vertex 1
+        :param v2: vertex 2
+        """
+        if (v1 in self.vertices) and (v2 in self.vertices):
+            self.vertices[v1].add(v2)
+            self.vertices[v2].add(v1)
         return
 
     def bft(self, starting_vertex):
@@ -159,8 +172,6 @@ class Graph:
                         path_copy = list(path)
                         path_copy.append(next_v)
                         stack.push(path_copy)
-
-
         print(path)
         return path
 
