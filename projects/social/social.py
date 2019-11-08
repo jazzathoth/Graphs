@@ -1,8 +1,10 @@
+import numpy as np
 
 
 class User:
     def __init__(self, name):
         self.name = name
+
 
 class SocialGraph:
     def __init__(self):
@@ -46,8 +48,31 @@ class SocialGraph:
         self.friendships = {}
         # !!!! IMPLEMENT ME
 
-        # Add users
+        for _ in range(numUsers):
+            self.addUser(name=self.lastID)
 
+        rem_friends = [int(round(x)) if x > 0 else int(0) for x in np.random.normal(loc=avgFriendships, scale=1, size=numUsers)]
+
+        for i in range(numUsers):
+            l_friends = []
+            for _ in range(rem_friends[i]):
+                proba = rem_friends.copy()
+                proba[i] = 0
+                total_f = sum(proba)
+                proba = [float(x) / total_f for x in proba]
+                dupl = True
+
+                while dupl:
+                    new_f = int(np.random.choice(list(range(numUsers)),
+                                             size=1,
+                                             p=proba))
+                    if new_f not in l_friends:
+                        dupl = False
+                rem_friends[new_f] += -1
+                l_friends.append(new_f)
+            print(rem_friends[i], end=" ")
+            print(l_friends)
+        return
         # Create friendships
 
     def getAllSocialPaths(self, userID):
