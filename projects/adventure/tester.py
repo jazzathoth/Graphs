@@ -222,7 +222,7 @@ roomGraph2 = {494: [(1, 8), {'e': 457}], 492: [(1, 20), {'e': 400}], 493: [(2, 5
              398: [(23, 23), {'s': 487, 'w': 390}], 499: [(23, 24), {'w': 311}], 471: [(24, 18), {'n': 320}],
              320: [(24, 19), {'s': 471, 'w': 300}]}
 world_graph = World()
-world_graph.loadGraph(roomGraph)
+world_graph.loadGraph(roomGraph2)
 player_obj = Player("Name", world_graph.startingRoom)
 
 tr = Traverser(world=world_graph, player=player_obj)
