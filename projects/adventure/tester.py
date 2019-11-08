@@ -1,7 +1,7 @@
 from player import Player
 from world import World
 from room import Room
-from traverser import Traverser
+from traverser2 import Traverser
 
 roomGraph={0: [(3, 5), {'n': 1, 's': 5, 'e': 3, 'w': 7}], 1: [(3, 6), {'s': 0, 'n': 2}], 2: [(3, 7), {'s': 1}], 3: [(4, 5), {'w': 0, 'e': 4}], 4: [(5, 5), {'w': 3}], 5: [(3, 4), {'n': 0, 's': 6}], 6: [(3, 3), {'n': 5}], 7: [(2, 5), {'w': 8, 'e': 0}], 8: [(1, 5), {'e': 7}]}
 roomGraph2 = {494: [(1, 8), {'e': 457}], 492: [(1, 20), {'e': 400}], 493: [(2, 5), {'e': 478}],
@@ -222,7 +222,7 @@ roomGraph2 = {494: [(1, 8), {'e': 457}], 492: [(1, 20), {'e': 400}], 493: [(2, 5
              398: [(23, 23), {'s': 487, 'w': 390}], 499: [(23, 24), {'w': 311}], 471: [(24, 18), {'n': 320}],
              320: [(24, 19), {'s': 471, 'w': 300}]}
 world_graph = World()
-world_graph.loadGraph(roomGraph2)
+world_graph.loadGraph(roomGraph)
 player_obj = Player("Name", world_graph.startingRoom)
 
 tr = Traverser(world=world_graph, player=player_obj)
