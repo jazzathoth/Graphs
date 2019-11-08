@@ -1,20 +1,10 @@
-from room import Room
 from player import Player
 from world import World
-from util import Queue, Stack
+from room import Room
 from traverser import Traverser
 
-import random
-
-# Load world
-world_graph = World()
-
-# You may uncomment the smaller graphs for development and testing purposes.
-# roomGraph={0: [(3, 5), {'n': 1}], 1: [(3, 6), {'s': 0, 'n': 2}], 2: [(3, 7), {'s': 1}]}
-# roomGraph={0: [(3, 5), {'n': 1, 's': 5, 'e': 3, 'w': 7}], 1: [(3, 6), {'s': 0, 'n': 2}], 2: [(3, 7), {'s': 1}], 3: [(4, 5), {'w': 0, 'e': 4}], 4: [(5, 5), {'w': 3}], 5: [(3, 4), {'n': 0, 's': 6}], 6: [(3, 3), {'n': 5}], 7: [(2, 5), {'w': 8, 'e': 0}], 8: [(1, 5), {'e': 7}]}
-# roomGraph={0: [(3, 5), {'n': 1, 's': 5, 'e': 3, 'w': 7}], 1: [(3, 6), {'s': 0, 'n': 2}], 2: [(3, 7), {'s': 1}], 3: [(4, 5), {'w': 0, 'e': 4}], 4: [(5, 5), {'w': 3}], 5: [(3, 4), {'n': 0, 's': 6}], 6: [(3, 3), {'n': 5, 'w': 11}], 7: [(2, 5), {'w': 8, 'e': 0}], 8: [(1, 5), {'e': 7}], 9: [(1, 4), {'n': 8, 's': 10}], 10: [(1, 3), {'n': 9, 'e': 11}], 11: [(2, 3), {'w': 10, 'e': 6}]}
-# roomGraph={0: [(3, 5), {'n': 1, 's': 5, 'e': 3, 'w': 7}], 1: [(3, 6), {'s': 0, 'n': 2, 'e': 12, 'w': 15}], 2: [(3, 7), {'s': 1}], 3: [(4, 5), {'w': 0, 'e': 4}], 4: [(5, 5), {'w': 3}], 5: [(3, 4), {'n': 0, 's': 6}], 6: [(3, 3), {'n': 5, 'w': 11}], 7: [(2, 5), {'w': 8, 'e': 0}], 8: [(1, 5), {'e': 7}], 9: [(1, 4), {'n': 8, 's': 10}], 10: [(1, 3), {'n': 9, 'e': 11}], 11: [(2, 3), {'w': 10, 'e': 6}], 12: [(4, 6), {'w': 1, 'e': 13}], 13: [(5, 6), {'w': 12, 'n': 14}], 14: [(5, 7), {'s': 13}], 15: [(2, 6), {'e': 1, 'w': 16}], 16: [(1, 6), {'n': 17, 'e': 15}], 17: [(1, 7), {'s': 16}]}
-roomGraph = {494: [(1, 8), {'e': 457}], 492: [(1, 20), {'e': 400}], 493: [(2, 5), {'e': 478}],
+roomGraph={0: [(3, 5), {'n': 1, 's': 5, 'e': 3, 'w': 7}], 1: [(3, 6), {'s': 0, 'n': 2}], 2: [(3, 7), {'s': 1}], 3: [(4, 5), {'w': 0, 'e': 4}], 4: [(5, 5), {'w': 3}], 5: [(3, 4), {'n': 0, 's': 6}], 6: [(3, 3), {'n': 5}], 7: [(2, 5), {'w': 8, 'e': 0}], 8: [(1, 5), {'e': 7}]}
+roomGraph2 = {494: [(1, 8), {'e': 457}], 492: [(1, 20), {'e': 400}], 493: [(2, 5), {'e': 478}],
              457: [(2, 8), {'e': 355, 'w': 494}], 484: [(2, 9), {'n': 482}], 482: [(2, 10), {'s': 484, 'e': 404}],
              486: [(2, 13), {'e': 462}], 479: [(2, 15), {'e': 418}], 465: [(2, 16), {'e': 368}],
              414: [(2, 19), {'e': 365}], 400: [(2, 20), {'e': 399, 'w': 492}], 451: [(2, 21), {'e': 429}],
@@ -231,47 +221,8 @@ roomGraph = {494: [(1, 8), {'e': 457}], 492: [(1, 20), {'e': 400}], 493: [(2, 5)
              293: [(23, 20), {'w': 238}], 431: [(23, 21), {'w': 381}], 487: [(23, 22), {'n': 398}],
              398: [(23, 23), {'s': 487, 'w': 390}], 499: [(23, 24), {'w': 311}], 471: [(24, 18), {'n': 320}],
              320: [(24, 19), {'s': 471, 'w': 300}]}
-
-world_graph.loadGraph(roomGraph)
-
-# UNCOMMENT TO VIEW MAP
-world_graph.printRooms()
-
+world_graph = World()
+world_graph.loadGraph(roomGraph2)
 player_obj = Player("Name", world_graph.startingRoom)
 
-print(f"gridSize: {len(world_graph.rooms)}")
-# print(f"currentRoom.n_to: {getattr(player_obj.currentRoom, 'n_to')}")
-# print(f"currentRoom.s_to: {getattr(player_obj.currentRoom, 's_to')}")
-# print(f"currentRoom.e_to: {getattr(player_obj.currentRoom, 'e_to')}")
-# print(f"currentRoom.w_to: {getattr(player_obj.currentRoom, 'w_to')}")
-# Fill this out
-
 tr = Traverser(world=world_graph, player=player_obj)
-
-traversalPath = tr.generate_path()
-#print(traversalPath)
-# TRAVERSAL TEST
-visited_rooms = set()
-player_obj.currentRoom = world_graph.startingRoom
-visited_rooms.add(player_obj.currentRoom)
-
-for move in traversalPath:
-    player_obj.travel(move)
-    visited_rooms.add(player_obj.currentRoom)
-
-if len(visited_rooms) == len(roomGraph):
-    print(f"TESTS PASSED: {len(traversalPath)} moves, {len(visited_rooms)} rooms visited")
-else:
-    print("TESTS FAILED: INCOMPLETE TRAVERSAL")
-    print(f"{len(roomGraph) - len(visited_rooms)} unvisited rooms")
-
-#######
-# UNCOMMENT TO WALK AROUND
-#######
-# player.currentRoom.printRoomDescription(player)
-# while True:
-#     cmds = input("-> ").lower().split(" ")
-#     if cmds[0] in ["n", "s", "e", "w"]:
-#         player.travel(cmds[0], True)
-#     else:
-#         print("I did not understand that command.")
